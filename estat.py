@@ -1,7 +1,8 @@
 import json
 import urllib.parse
 import urllib.request
-from IPython import display, get_ipython
+from IPython import get_ipython
+from IPython.display import display
 
 import pandas as pd
 
