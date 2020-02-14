@@ -1,3 +1,5 @@
+from setuptools import setup
+
 setup(
     name='python-eStat',
     version='1.0',
