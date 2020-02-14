@@ -1,7 +1,4 @@
-from setuptools import setup, find_packages
-
-with open('LICENSE') as f:
-    license = f.read()
+from setuptools import setup
 
 setup(
     name='python-eStat',
