@@ -77,17 +77,12 @@ def get_data(param):
     df = pd.json_normalize(res_json['GET_STATS_DATA']['STATISTICAL_DATA']['DATA_INF']['VALUE'])
     suf_ix = 0
     for class_item in res_json['GET_STATS_DATA']['STATISTICAL_DATA']['CLASS_INF']['CLASS_OBJ']:
-        suf_ix = suf_ix + 1
-#        print(class_item['@id'] + ':' + class_item['@name'])
         classdf = pd.json_normalize(class_item['CLASS'])
-#        classdict = dict(zip(classdf['@code'], classdf['@name']))
-#        df['@' + class_item['@id']] = [classdict[str(i)] for i in df['@' + class_item['@id']]]
-#        df[class_item['@name']] = [classdict[str(i)] for i in df['@' + class_item['@id']]]
         df = df.merge(classdf,
                 left_on = '@' + class_item['@id'],
                 right_on = '@code',
-                suffixes = ('', '_' + str(suf_ix)),
+                suffixes = ('', '_' + class_item['@id']),
                 validate = 'many_to_one')
-        df = df.rename(columns = {'@name': class_item['@name'] + '(' + class_item['@id'] + ')'})
+        df = df.rename(columns = {'@name': class_item['@name'] + '_' + class_item['@id'] })
     df.columns = df.columns.str.replace('@', '')
     return df.rename(columns = {'$': 'value'})
