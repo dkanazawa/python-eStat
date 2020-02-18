@@ -87,7 +87,7 @@ def get_data(param):
     df.columns = df.columns.str.replace('@', '')
     df = df.rename(columns = {'$': 'value'})
     # replace specific value to NaN
-    df.value.replace(['-','ÅE', '•'], np.nan, inplace=True)
+    df.value.replace(['-','„Éª', 'ÔΩ•'], np.nan, inplace=True)
     # change dtypes
     for col in df.columns:
         try:
