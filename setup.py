@@ -5,12 +5,12 @@ with open('LICENSE') as f:
 
 setup(
     name='python-eStat',
-    version='1.1',
+    version='1.2',
     description='Tool for getting eStat data',
     author='Daiki Kanazawa',
     author_email='dkanazawa@jmdc.co.jp',
     url='https://github.com/jmdc-dkanazawa/python-eStat',
-    install_requires=['IPython', 'pandas'],
+    install_requires=['IPython', 'pandas', 'numpy'],
     license=license,
     packages=find_packages(exclude=('tests', 'docs'))
 )

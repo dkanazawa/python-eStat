@@ -5,6 +5,7 @@ from IPython import get_ipython
 from IPython.display import display
 
 import pandas as pd
+import numpy as np
 
 
 API_VERSION = "3.0"
@@ -75,7 +76,6 @@ def get_data(param):
     res = get_api_return_val(param, url).decode()
     res_json = json.loads(res)
     df = pd.json_normalize(res_json['GET_STATS_DATA']['STATISTICAL_DATA']['DATA_INF']['VALUE'])
-    suf_ix = 0
     for class_item in res_json['GET_STATS_DATA']['STATISTICAL_DATA']['CLASS_INF']['CLASS_OBJ']:
         classdf = pd.json_normalize(class_item['CLASS'])
         df = df.merge(classdf,
@@ -85,4 +85,21 @@ def get_data(param):
                 validate = 'many_to_one')
         df = df.rename(columns = {'@name': class_item['@name'] + '_' + class_item['@id'] })
     df.columns = df.columns.str.replace('@', '')
-    return df.rename(columns = {'$': 'value'})
+    df = df.rename(columns = {'$': 'value'})
+    # replace specific value to NaN
+    df.value.replace(['-'], np.nan, inplace=True)
+    # change dtypes
+    for col in df.columns:
+        try:
+            df = df.astype({col: int}, copy=False)
+        except:
+            try:
+                df = df.astype({col: float}, copy=False)
+            except:
+                try:
+                    df = df.astype({col: 'datatime64'}, copy=False)
+                except:
+                    pass
+        
+    return df
+
