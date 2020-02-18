@@ -5,7 +5,7 @@ with open('LICENSE') as f:
 
 setup(
     name='python-eStat',
-    version='1.2',
+    version='1.2.1',
     description='Tool for getting eStat data',
     author='Daiki Kanazawa',
     author_email='dkanazawa@jmdc.co.jp',
