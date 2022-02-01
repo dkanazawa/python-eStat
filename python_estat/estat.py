@@ -48,12 +48,15 @@ def get_list(param, form='df'):
         else:
             return res
     else:
-        d = pd.json_normalize(json.loads(res)['GET_STATS_LIST']['DATALIST_INF']['TABLE_INF'])
-        if form == 'df':
-            return d[['STAT_NAME.@code', 'STAT_NAME.$', 'STATISTICS_NAME', '@id', 'TITLE.$']]
-        elif form == 'dfall':
-            return d
-        else:
+        try:
+            d = pd.json_normalize(json.loads(res)['GET_STATS_LIST']['DATALIST_INF']['TABLE_INF'])
+            if form == 'df':
+                return d[['STAT_NAME.@code', 'STAT_NAME.$', 'STATISTICS_NAME', '@id', 'TITLE.$']]
+            elif form == 'dfall':
+                return d
+            else:
+                return res
+        except KeyError:
             return res
 
 
